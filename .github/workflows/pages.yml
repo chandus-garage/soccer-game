@@ -32,10 +32,23 @@ jobs:
           Path('/tmp/soccer-quest-check.js').write_text(html.split('<script>',1)[1].split('</script>',1)[0], encoding='utf-8')
           PY
           node --check /tmp/soccer-quest-check.js
+      # GitHub Actions cannot bootstrap Pages when this repository's Pages site
+      # has not been enabled by an administrator in Settings > Pages.
+      # Select "GitHub Actions" as the build/deployment source once.
+      - name: Check Pages is enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          status=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages")
+          if [ "$status" != "200" ]; then
+            echo "::error title=Enable GitHub Pages::Open https://github.com/${{ github.repository }}/settings/pages and set Build and deployment > Source to GitHub Actions, then rerun this workflow."
+            exit 1
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload static website
         uses: actions/upload-pages-artifact@v4
         with:
