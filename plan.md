@@ -39,7 +39,8 @@ Teach soccer decision-making to a child around age eight through *short, interac
 | Optional voice coach and game sounds | Complete | Browser-dependent |
 | Real ball practice drills | Complete | One per mission |
 | **Winning-moment screenshot** | **Complete** | Captured on success from live Canvas state; highlights blue player, includes message and forward-pass indicator if relevant; shown on result screen; stays in memory only |
-| GitHub Pages deployment workflow | Ready | Requires Pages enabled, plus a Pages-eligible repo/plan |
+| YouTube Watch & Learn video library | Complete | Five curated clips grouped by defending/attacking, click-to-load embeds, related mission links and YouTube fallback |
+| GitHub Pages deployment workflow | Ready | Repo public; requires Pages source set to GitHub Actions and successful deployment |
 
 ## 4. Roadmap
 
@@ -50,9 +51,13 @@ Teach soccer decision-making to a child around age eight through *short, interac
 - [x] Show what went right on the success screen with a snapshot of *actual gameplay* (not a generic illustration).
 - [x] Add real-world parent drills and simple coaching cues.
 - [x] Prepare repository source and GitHub Pages workflow.
+- [x] Add YouTube Watch & Learn section with defending and attacking clips, tap-to-play video embeds, and related mission links.
 - [ ] **Owner action:** Enable Pages under Settings → Pages and ensure repo visibility/plan supports Pages; verify public URL.
 
 ### P1 — Better learning transfer (next)
+
+- [ ] Test the video library with the child and parent. Prioritize replacing any clips that are too long, blocked from embedding, or too advanced; keep an external YouTube fallback.
+- [ ] Add brief age-appropriate **before watching** and **after watching** prompts, plus parent-selected watched markers stored locally.
 
 - [ ] Add **before/after replay** showing the starting position, movement trail, and finish position, with animated arrows for the good decision.
 - [ ] Show **successful and unsuccessful paths side by side**; avoid shaming and give retry guidance.
@@ -87,7 +92,15 @@ Teach soccer decision-making to a child around age eight through *short, interac
 - [ ] User-supplied match scenarios or clips, with explicit privacy controls and consent.
 - [ ] Cloud sync or accounts only if multi-device requirements justify them.
 
-## 5. Data flow & architecture
+## 5. Video safety, architecture, and naming
+
+- Video metadata lives in the static `videoLibrary` array in `index.html`. Two categories appear under **Watch & Learn** on the home screen.
+- Third-party videos are not copied into the repo. The privacy-enhanced `youtube-nocookie.com` iframe is created only after selecting a video, with a regular YouTube watch link as fallback.
+- Core soccer missions, progress, and winning-moment screenshots stay local. Watching YouTube requires connectivity and follows YouTube's policies; parents should preview external content.
+- Suggested public repo name: **`soccer-quest`** (alternatives: `pitch-quest`, `brave-boots`, `little-strikers`). No rename yet; rename can change the GitHub Pages project path and documentation URLs.
+- Future: allow parents to select videos and optionally enable safer direct-to-YouTube navigation if embeds aren't reliable.
+
+## 6. Data flow & architecture
 
 ```text
 Child selects mission
@@ -101,15 +114,16 @@ Child selects mission
 
 Everything is client-side. **No personal identifiers, pictures of children, cloud inference, or network API requests.** Winning screenshots are generated inside the browser and shown immediately. They are not stored or uploaded.
 
-## 6. Quality acceptance tests
+## 7. Quality acceptance tests
 
 - [x] Desktop/mobile browser smoke test: all five missions can be completed without JavaScript errors.
 - [x] Mission complete shows real screenshot, player visibly highlighted, and what-to-remember guidance.
 - [ ] Test on actual child device/browser with touch gestures (especially small iPhone/Android screens).
 - [ ] Test accessibility using VoiceOver/TalkBack.
 - [ ] Validate GitHub Pages deployment after Pages settings have been enabled.
+- [ ] Verify all five external YouTube clips on a real Android/iOS browser; confirm external fallback and touch-friendly cards.
 
-## 7. Feedback questions for parent after first practice
+## 8. Feedback questions for parent after first practice
 
 1. Does he understand that the player labeled **YOU** is his player?
 2. Can he move the player on his own with touch controls?
