@@ -23,8 +23,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Verify game JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          assert html.count('<script>') == 1, 'expected one inline script'
+          Path('/tmp/soccer-quest-check.js').write_text(html.split('<script>',1)[1].split('</script>',1)[0], encoding='utf-8')
+          PY
+          node --check /tmp/soccer-quest-check.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload static website
         uses: actions/upload-pages-artifact@v4
         with:
