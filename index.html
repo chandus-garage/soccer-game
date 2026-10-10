@@ -81,6 +81,27 @@
   .result-snapshot figcaption{font-size:14px;font-weight:650;color:#e8f7f0;padding-top:10px;line-height:1.5}
   .result-snapshot strong{color:var(--lime)}
   .drills{display:flex;flex-direction:column;gap:10px}.drill{border-left:4px solid var(--lime);padding:7px 12px;background:#ffffff0c;border-radius:5px;font-weight:500}
+
+  /* Watch & Learn: no YouTube requests until a parent/player starts a video */
+  .watch-highlight{margin:32px 0 20px;border:1px solid #639eae66;border-radius:22px;background:linear-gradient(145deg,#184657,#0c2d3c);padding:clamp(15px,3vw,24px)}
+  .watch-intro{font-weight:500;color:#d8eef2;margin:7px 0 17px}
+  .video-group{margin:18px 0 22px}.video-group h4{font-size:20px;margin:0 0 10px}
+  .video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .video-card{background:#0c3040;color:#fff;border:1px solid #679dab66;border-radius:17px;overflow:hidden;display:flex;align-items:stretch;text-align:left;min-height:125px;transition:border-color .2s,transform .2s}
+  .video-card:hover,.video-card:focus-visible{border-color:var(--lime);transform:translateY(-2px)}
+  .video-poster{flex:0 0 112px;display:grid;place-items:center;position:relative;font-size:45px;background:linear-gradient(145deg,#175d64,#146548)}
+  .video-card[data-topic="Attacking"] .video-poster{background:linear-gradient(145deg,#385f8a,#266150)}
+  .video-play{display:grid;place-items:center;position:absolute;bottom:10px;right:10px;width:32px;height:32px;border-radius:50%;font-size:17px;background:#ffdb6c;color:#19312b;box-shadow:0 2px 8px #0006}
+  .video-info{padding:11px;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0}
+  .video-title{font-size:15px;font-weight:900;line-height:1.25}
+  .video-cue{font-size:12px;font-weight:500;color:#bcd8e1;line-height:1.35}
+  .video-player{background:#061f2b;border:2px solid #bafa6990;border-radius:18px;padding:13px;margin:15px 0}
+  .video-player h4{font-size:18px;margin:4px 0 10px}
+  .video-player iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:11px;background:#000;display:block}
+  .video-player a{color:#bafa69;font-size:14px}
+  .video-player p{font-size:13px;font-weight:500;color:#c9e0e8}
+  .video-disclaimer{font-size:12px;color:#c4d9e2;font-weight:500}
+  @media (max-width:650px){.video-grid{grid-template-columns:1fr}.video-card{min-height:100px}.video-poster{flex-basis:105px}}
   @media (max-width:650px){
     #app{padding:12px 12px calc(20px + env(safe-area-inset-bottom))}
     .hero{grid-template-columns:1fr;gap:4px;padding:15px 0}.hero-ball{display:none}
@@ -105,6 +126,42 @@ const levels=[
  {emoji:'🧭',name:'Find the Way Forward',cue:'FIND SPACE. NOT YOUR GOAL.',prompt:'You have the ball, but a defender blocks your way. What should you look for?',answers:['Always turn back and dribble straight toward your own goal.','Stop and try tricks until someone takes it.','Dribble into open space or pass to a teammate moving forward.'],correct:2,why:'You don’t have to run straight at defenders. Look for space or a teammate. A safe pass back is sometimes OK, but don’t automatically retreat toward your goal.',instructions:'You already have the ball! Go FORWARD into space or PASS to your teammate.',goal:'Escape pressure by finding a positive forward option.',win:'You found a way forward! 🧭',takeaway:'HEAD UP → FIND SPACE → GO OR PASS',drill:'Place one cone in front of you and a goal beyond it. Dribble around the cone toward goal, then try with a parent defending.',limit:34},
  {emoji:'🚀',name:'Fast Forward',cue:'SEE IT. DECIDE. MOVE!',prompt:'You are starting an attack. Your teammate is already running forward. What is best?',answers:['Look up and choose a quick forward pass or dribble into space.','Wait while you perform lots of tricks.','Turn toward your own goal without looking up.'],correct:0,why:'A quick choice can beat defenders. Look up early: if your teammate has space, pass! Otherwise take the ball forward.',instructions:'Act FAST: PASS forward to the blue teammate or ATTACK their goal!',goal:'Make a fast forward play before defenders catch you.',win:'Quick thinking and teamwork! 🚀',takeaway:'LOOK UP → CHOOSE → GO!',drill:'Have a parent call “GO!” when you get the ball. Dribble or pass to a teammate within about two seconds.',limit:31}
 ];
+
+const videoLibrary=[
+ {id:'XsHs4dW4pNY',topic:'Defending',icon:'🛡️',title:'How to Defend — Fast to Slow',cue:'Close the gap, stay goal-side, slow down and time your challenge.',mission:0},
+ {id:'c1S5sVxOTSA',topic:'Defending',icon:'⚡',title:'Win the Ball, Then Attack',cue:'Don’t just kick it away: win possession and look forward.',mission:1},
+ {id:'jL3JuERqxoM',topic:'Attacking',icon:'🤝',title:'Pass and Move Soccer Drill',cue:'Pass early, move into space, then offer help to your teammate.',mission:4},
+ {id:'Tj9BgZ2T4iM',topic:'Attacking',icon:'🚀',title:'First Touch Basics',cue:'Control the ball so your next move can be quick.',mission:3},
+ {id:'C2rLnJLIEQ8',topic:'Attacking',icon:'🥅',title:'Dribbling to Create a Shot',cue:'Move toward goal when you find an opening.',mission:4}
+];
+function watchMarkup(){
+ const groups=['Defending','Attacking'].map(topic=>{
+  const cards=videoLibrary.map((v,i)=>v.topic!==topic?'':
+   '<button class="video-card" type="button" data-video="'+i+'" data-topic="'+topic+'" aria-label="Watch '+safe(v.title)+'">'
+   +'<span class="video-poster" aria-hidden="true">'+v.icon+'<span class="video-play">▶</span></span>'
+   +'<span class="video-info"><span class="video-title">'+safe(v.title)+'</span>'
+   +'<span class="video-cue">'+safe(v.cue)+'</span></span></button>').join('');
+  return '<div class="video-group"><h4>'+(topic==='Defending'?'🛡️ Defending & winning the ball':'🚀 Attacking & starting fast')+'</h4><div class="video-grid">'+cards+'</div></div>';
+ }).join('');
+ return '<section class="watch-highlight" id="watch-learn" aria-labelledby="watch-heading">'
+  +'<div class="eyebrow">WATCH · LEARN · PLAY</div><div class="sectionhead"><h3 id="watch-heading">🎥 Watch & Learn</h3></div>'
+  +'<p class="watch-intro">Short soccer demonstrations to help you recognize the moves in your missions. Watch one, then try its challenge!</p>'
+  +'<div id="video-player-slot" aria-live="polite"></div>'+groups
+  +'<p class="video-disclaimer">💡 Parent tip: watch together, then practice with a ball. Videos need internet and are provided by YouTube; the game itself still works offline.</p></section>';
+}
+function playVideo(n){
+ if(screen!=='home')return;
+ const v=videoLibrary[n],slot=document.getElementById('video-player-slot');
+ if(!v||!slot)return;
+ const link='https://www.youtube.com/watch?v='+v.id;
+ slot.innerHTML='<div class="video-player"><div class="eyebrow">NOW WATCHING</div><h4>'+safe(v.title)+'</h4>'
+  +'<iframe title="'+safe(v.title)+'" src="https://www.youtube-nocookie.com/embed/'+v.id+'?rel=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+  +'<p>⚽ Practice challenge: '+safe(v.cue)+'</p>'
+  +'<div class="buttonline"><button type="button" class="btn" data-level="'+v.mission+'">🎮 Try the related mission →</button>'
+  +'<a href="'+link+'" target="_blank" rel="noopener noreferrer">↗ Open on YouTube if video doesn’t play</a></div></div>';
+ slot.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 const A=document.getElementById('app');
 let screen='home',index=0,answer=null,game=null,frame=0,last=0,canvas=null,ctx=null,keys={},pointerDown=false;
 let voice=false,muted=false,progress=loadProgress();
@@ -113,9 +170,9 @@ function saveProgress(){try{localStorage.setItem('soccer-quest-progress',JSON.st
 function safe(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function speak(t){if(!voice||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();let msg=new SpeechSynthesisUtterance(t);msg.rate=.94;msg.pitch=1.15;speechSynthesis.speak(msg)}catch{}}
 function chirp(type='yay'){if(muted)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;let ac=window._sqAudio||(window._sqAudio=new C());if(ac.state==='suspended')ac.resume();let notes=type==='yay'?[440,554,659]:type==='no'?[270,220]:[550];notes.forEach((f,i)=>{let o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+i*.12;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.018);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.17)})}catch{}}
-const top=()=>`<header class="top"><div class="brand"><span class="logo">⚽</span><span>SOCCER QUEST</span></div><div style="display:flex;gap:6px"><button class="mini" data-action="voice" aria-label="Toggle voice coach">${voice?'🔊 Coach ON':'🔈 Coach OFF'}</button><button class="mini" data-action="sound" aria-label="Toggle sound effects">${muted?'🔇':'🎵'}</button></div></header>`;
+const top=()=>`<header class="top"><div class="brand"><span class="logo">⚽</span><span>SOCCER QUEST</span></div><div style="display:flex;gap:6px"><button class="mini" data-action="videos" aria-label="Jump to videos">🎥 Videos</button><button class="mini" data-action="voice" aria-label="Toggle voice coach">${voice?'🔊 Coach ON':'🔈 Coach OFF'}</button><button class="mini" data-action="sound" aria-label="Toggle sound effects">${muted?'🔇':'🎵'}</button></div></header>`;
 function mount(html){A.innerHTML=top()+html}
-function showHome(){stop();screen='home';answer=null;let done=Object.keys(progress).length;mount(`<section class="hero"><div><div class="eyebrow">THE 5-MINUTE SOCCER CHALLENGE</div><h1>THINK FAST.<br><span class="highlight">PLAY BRAVE!</span></h1><p class="muted" style="font-size:18px">Five fun mini-missions to help you win the ball, defend your goal, and attack quickly!</p><div class="cues"><div class="cue">🛡️ <b>CLOSE</b> SPACE</div><div class="cue">⚡ <b>WIN</b> IT</div><div class="cue">🚀 <b>GO</b> FORWARD</div></div><button class="btn large" data-action="quick">⚡ START QUICK PRACTICE →</button></div><div class="hero-ball" aria-hidden="true">⚽</div></section><section><div class="sectionhead"><h3>Choose your mission</h3><span class="muted" style="font-size:13px">${done}/5 completed</span></div><div class="cards">${levels.map((x,i)=>`<button class="card" data-level="${i}"><span class="card-emoji">${x.emoji}</span><span class="card-main"><div class="card-title">${i+1}. ${x.name}</div><div class="card-sub">${x.cue}</div>${progress[i]?`<div class="status">${'⭐'.repeat(progress[i])} Completed</div>`:''}</span><span class="arrow">→</span></button>`).join('')}</div><p class="footer-note">✅ Works offline · No account · No ads · No data sent anywhere<br>Parent tip: After playing, practice one of the missions together with a real ball.</p></section>`)}
+function showHome(){stop();screen='home';answer=null;let done=Object.keys(progress).length;mount(`<section class="hero"><div><div class="eyebrow">THE 5-MINUTE SOCCER CHALLENGE</div><h1>THINK FAST.<br><span class="highlight">PLAY BRAVE!</span></h1><p class="muted" style="font-size:18px">Five fun mini-missions to help you win the ball, defend your goal, and attack quickly!</p><div class="cues"><div class="cue">🛡️ <b>CLOSE</b> SPACE</div><div class="cue">⚡ <b>WIN</b> IT</div><div class="cue">🚀 <b>GO</b> FORWARD</div></div><button class="btn large" data-action="quick">⚡ START QUICK PRACTICE →</button></div><div class="hero-ball" aria-hidden="true">⚽</div></section><section><div class="sectionhead"><h3>Choose your mission</h3><span class="muted" style="font-size:13px">${done}/5 completed</span></div><div class="cards">${levels.map((x,i)=>`<button class="card" data-level="${i}"><span class="card-emoji">${x.emoji}</span><span class="card-main"><div class="card-title">${i+1}. ${x.name}</div><div class="card-sub">${x.cue}</div>${progress[i]?`<div class="status">${'⭐'.repeat(progress[i])} Completed</div>`:''}</span><span class="arrow">→</span></button>`).join('')}</div><p class="footer-note">✅ Missions work offline · No account · No ads · No personal data sent anywhere<br>Parent tip: After playing, practice one of the missions together with a real ball.</p></section>${watchMarkup()}`)}
 function showLesson(i){stop();index=i;screen='lesson';answer=null;const x=levels[i];mount(`<section class="lesson"><div class="eyebrow">MISSION ${i+1} OF 5</div><h2>${x.emoji} ${x.name}</h2><div class="pill">${x.cue}</div><div class="panel"><div class="situation"><div class="bigicon">🤔</div><div><div class="eyebrow">WHAT WOULD YOU DO?</div><p style="font-size:clamp(18px,3.7vw,23px);font-weight:850">${x.prompt}</p></div></div><div class="answers">${x.answers.map((a,j)=>`<button class="answer" data-answer="${j}"><span class="letter">${String.fromCharCode(65+j)}</span><span>${safe(a)}</span></button>`).join('')}</div><div id="answer-out"></div></div><div class="buttonline"><button class="btn secondary" data-action="home">← Missions</button><button class="btn" data-action="play">🎮 Skip to field practice →</button></div></section>`);speak(x.prompt)}
 function chooseAnswer(n){if(screen!=='lesson'||answer!==null)return;answer=n;const x=levels[index],good=n===x.correct;document.querySelectorAll('.answer').forEach((b,j)=>{b.disabled=true;if(j===x.correct)b.classList.add('good');else if(j===n)b.classList.add('bad')});document.getElementById('answer-out').innerHTML=`<div class="feedback ${good?'good':'bad'}"><div class="feedback-title">${good?'🌟 GREAT CHOICE!':'💡 GOOD TRY—HERE’S THE TRICK!'}</div><p>${x.why}</p></div><button class="btn large block" data-action="play">⚽ TRY IT ON THE FIELD →</button>`;chirp(good?'yay':'no');speak(good?'Great choice! '+x.why:'Good try. '+x.why)}
 function initGame(i){stop();index=i;screen='play';const x=levels[i];const startingBall=[false,false,false,true,true][i];let user,reds,mate;
@@ -252,11 +309,13 @@ function drawPlayer(obj,color,num,label,rad,hero=false){let p=fieldPos(obj.u,obj
 window.addEventListener('keydown',e=>{if(!game?.active)return;let k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowRight','ArrowLeft','ArrowDown','ArrowUp',' ','j','k','w','a','s','d'].includes(k)){e.preventDefault();keys[k]=true;if(k===' '){action('steal')}if(k==='j')action('pass');if(k==='k')action('shoot')}});
 window.addEventListener('keyup',e=>{let k=e.key.length===1?e.key.toLowerCase():e.key;keys[k]=false});window.addEventListener('blur',()=>{keys={}});
 A.addEventListener('click',e=>{let t=e.target.closest('button');if(!t)return;
+ if(t.hasAttribute('data-video')){playVideo(Number(t.dataset.video));return}
  if(t.hasAttribute('data-level')){showLesson(Number(t.dataset.level));return}
  if(t.hasAttribute('data-answer')){chooseAnswer(Number(t.dataset.answer));return}
  let a=t.dataset.action;
  if(a==='voice'){voice=!voice;t.textContent=voice?'🔊 Coach ON':'🔈 Coach OFF';if(voice)speak('Let’s play soccer! Be brave!');else if('speechSynthesis'in window)speechSynthesis.cancel()}
  if(a==='sound'){muted=!muted;t.textContent=muted?'🔇':'🎵';if(!muted)chirp('tap')}
+ if(a==='videos'){if(screen!=='home')showHome();document.getElementById('watch-learn')?.scrollIntoView({behavior:'smooth'});}
  if(a==='home')showHome();if(a==='quick')showLesson(0);if(a==='play')initGame(index);if(a==='restart'){if(screen==='play'||screen==='result')initGame(index);else showLesson(index)}
  if(a==='next'){showLesson(index===4?0:index+1)}
  if(['steal','pass','shoot'].includes(a))action(a)
