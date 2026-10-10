@@ -2,7 +2,7 @@
 
 A free, mobile-friendly mini-game for young soccer players (roughly ages 7–9) to practice brave, safe defending and fast, smart attacking decisions.
 
-**Play online (after GitHub Pages is activated):** https://chandus-garage.github.io/soccer-game/
+**Play online (once GitHub Pages deployment succeeds):** https://chandus-garage.github.io/soccer-game/
 
 ## Five missions
 
@@ -13,6 +13,16 @@ A free, mobile-friendly mini-game for young soccer players (roughly ages 7–9) 
 5. **Fast Forward** — decide quickly: pass, dribble into space, or shoot when close enough.
 
 Each mission has a decision question, interactive playable field, and a child-friendly **winning-moment screenshot** with the player's location circled, plus a physical drill.
+
+## Watch & Learn: YouTube video lessons
+
+The home page has a **🎥 Videos / Watch & Learn** section with five curated clips in two groups:
+- **Defending & winning the ball:** close down attackers without reckless lunging, then transition to offense.
+- **Attacking & starting fast:** pass and move, first touch, and dribbling to create a shot.
+
+Tap a video card to load an on-page, privacy-enhanced YouTube player; if embedding is blocked, use **Open on YouTube**. The player includes a button linking to the related Soccer Quest mission. No YouTube iframe is loaded until the video is selected. YouTube videos require an internet connection; all five built-in game missions remain usable offline from the standalone HTML file.
+
+Curated video IDs/links are defined in `videoLibrary` in `index.html`; video source belongs to its original YouTube publisher, not this repository.
 
 ## How to play
 
@@ -40,7 +50,7 @@ Each mission has a decision question, interactive playable field, and a child-fr
 - **Stop server:** Ctrl+C in the terminal.
 - **Troubleshoot:** enable browser Developer Tools → Console; for audio, tap once to unlock audio on mobile; use a recent Chrome/Safari/Firefox.
 - **Persistence:** stars are saved only in that browser's local storage under `soccer-quest-progress`.
-- **Network:** no API calls, tracking, remote storage, or user sign-in.
+- **Network:** core gameplay makes no network API calls, has no tracking, remote storage, or sign-in. Selecting a Watch & Learn video loads a third-party YouTube embed and may use YouTube cookies or data; use the external YouTube link if embedding is blocked.
 
 ## Deployment (GitHub Pages)
 
@@ -64,6 +74,12 @@ The repository contains `.github/workflows/pages.yml`. It publishes the root sta
 - Repeat mission and return home; saved star progress persists after reload.
 - Test at 390 × 844 mobile portrait and desktop landscape dimensions.
 - Verify gameplay with sound/voice off, keyboard, and touch controls.
+- Open Watch & Learn and select at least one video in each category; confirm the player loads on a connected device, its external YouTube link works, and the related mission button returns to the game.
+- Confirm the game still works offline without tapping any video.
+
+## Repository name
+
+**Recommended:** rename this public repo from `soccer-game` to `soccer-quest` once ready. GitHub redirects repository links after a rename, but GitHub Pages project URLs use the repo slug. Update references in this README and verify the new Pages URL (`https://chandus-garage.github.io/soccer-quest/`) after renaming.
 
 ## License
 
