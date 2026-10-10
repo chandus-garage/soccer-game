@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#071c28" />
+<meta name="description" content="Soccer Quest: Five quick soccer decision and movement challenges for young players. Plays offline." />
+<title>Soccer Quest ⚽ — Think Fast, Play Brave!</title>
+<style>
+  :root{--navy:#071c28;--deep:#0b2634;--panel:#103546;--panel2:#164658;--blue:#66caff;--lime:#bafa69;--gold:#ffdc74;--red:#ff8587;--white:#f5fbff;--muted:#bdd2d9}
+  *{box-sizing:border-box} html{background:var(--navy)}
+  body{margin:0;min-height:100vh;min-height:100dvh;background:radial-gradient(circle at 70% 0%,#20546a 0%,#0b2836 36%,#071c28 85%);color:var(--white);font:600 16px/1.4 system-ui,-apple-system,'Segoe UI',sans-serif;touch-action:pan-y}
+  button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  button:focus-visible{outline:3px solid var(--gold);outline-offset:4px}button:disabled{opacity:.42;cursor:not-allowed}
+  #app{max-width:980px;margin:0 auto;padding:14px clamp(12px,3vw,30px) calc(20px + env(safe-area-inset-bottom))}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:9px;font-size:clamp(18px,3.6vw,24px);font-weight:1000;letter-spacing:-.7px}
+  .brand .logo{font-size:29px;filter:drop-shadow(0 3px 2px #0004)}
+  .mini{border:1px solid #ffffff2a;background:#ffffff13;color:white;padding:9px 12px;border-radius:13px;font-size:13px}
+  h1{font-size:clamp(35px,7vw,65px);line-height:1.03;margin:6px 0 12px;font-weight:1000;letter-spacing:-2px}
+  h2{font-size:clamp(26px,5vw,38px);line-height:1.13;margin:7px 0}
+  p{margin:8px 0 12px}.muted{color:var(--muted);font-weight:500}
+  .eyebrow{font-size:12px;letter-spacing:2px;color:var(--lime);font-weight:900;text-transform:uppercase}
+  .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center;padding:20px 4px 30px}
+  .hero .highlight{color:var(--lime)}
+  .hero-ball{position:relative;margin:auto;width:min(260px,100%);aspect-ratio:1;display:grid;place-items:center;font-size:clamp(110px,18vw,190px);border-radius:50%;background:radial-gradient(circle at 40% 35%,#4ca27738,#143a50 68%);box-shadow:inset 0 0 0 2px #aefa6a39}
+  .hero-ball::after{content:'⚡';position:absolute;top:6%;right:-10%;font-size:55px;transform:rotate(20deg)}
+  .btn{border:0;padding:13px 19px;border-radius:17px;background:var(--lime);color:#102623;font-weight:1000;box-shadow:0 5px 0 #72a940;transition:transform .1s,filter .1s;text-align:center}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #72a940}
+  .btn.secondary{background:#183e51;color:white;box-shadow:0 4px 0 #0c2633;border:1px solid #437085}
+  .btn.alt{background:var(--gold);box-shadow:0 5px 0 #ae8640}
+  .btn.block{width:100%}.btn.large{font-size:19px;padding:15px 22px}
+  .cues{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .cue{border:1px solid #ffffff22;background:#ffffff12;border-radius:30px;padding:8px 13px;color:var(--white);font-size:13px}
+  .cue b{color:var(--lime)}
+  .sectionhead{display:flex;align-items:center;justify-content:space-between;margin:14px 0 12px;gap:6px}
+  .sectionhead h3{margin:0;font-size:22px}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .card{background:linear-gradient(120deg,#154258,#0d3040);border:1px solid #4b879259;border-radius:19px;display:flex;gap:14px;align-items:center;padding:17px 14px;min-height:116px;text-align:left;color:white;width:100%}
+  .card:hover,.card:focus-visible{background:#1e5465;border-color:var(--lime)}
+  .card-emoji{font-size:36px;flex:0 0 47px;text-align:center}
+  .card-main{flex:1;min-width:0}.card-title{font-size:17px;font-weight:1000;margin:0 0 4px}
+  .card-sub{font-size:13px;color:#c4dce6;font-weight:500}
+  .card .arrow{color:var(--lime);font-size:24px}.status{color:var(--gold);font-size:14px;margin-top:5px}
+  .footer-note{font-size:12px;color:#a6c2ce;font-weight:500;margin:19px 4px}
+  .lesson{max-width:790px;margin:0 auto}.pill{border-radius:100px;border:1px solid #98e5ba4c;padding:7px 12px;font-size:12px;color:var(--lime);display:inline-block;background:#133d35}
+  .panel{border:1px solid #ffffff21;background:linear-gradient(145deg,#154254,#103040);border-radius:22px;padding:clamp(18px,4vw,28px);margin:17px 0}
+  .situation{display:flex;align-items:center;gap:16px}.situation .bigicon{font-size:55px;line-height:1}
+  .answers{display:grid;gap:10px;margin:18px 0}
+  .answer{width:100%;background:#1a4558;color:white;border:2px solid #497184;padding:15px;border-radius:16px;text-align:left;display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.35}
+  .answer .letter{background:#092d3e;border-radius:11px;display:inline-grid;place-items:center;width:29px;height:29px;flex:0 0 29px}
+  .answer.good{background:#274d37;border-color:var(--lime)}.answer.bad{background:#513940;border-color:var(--red)}
+  .answer:disabled{opacity:1}.answer:not(:disabled):hover{border-color:#daedfb}
+  .feedback{border-radius:17px;padding:17px;margin:15px 0;background:#0f3441;border:1px solid #8fcdaa76;animation:pop .22s ease}
+  .feedback.good{border-color:#abf47d}.feedback.bad{border-color:#fd9c90}
+  .feedback-title{font-size:20px;margin:0 0 6px}.feedback p{font-weight:500;margin:0;color:#e2edf1}
+  @keyframes pop{from{transform:scale(.97);opacity:.4}to{transform:scale(1);opacity:1}}
+  .buttonline{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.buttonline .btn{flex:1}
+  .hud{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .hud-title{font-size:17px;font-weight:1000}.hud-timer{font-weight:1000;font-size:21px;padding:5px 12px;background:#164656;border-radius:12px;color:var(--gold)}
+  .scoretag{font-size:12px;color:var(--lime);text-transform:uppercase;letter-spacing:.6px}
+  .board{position:relative;border-radius:18px;overflow:hidden;border:3px solid #9acfb34d;background:#087d46;box-shadow:0 9px 0 #082c32,0 13px 35px #0006;width:100%;height:clamp(265px,46vw,450px);touch-action:none;user-select:none;-webkit-user-select:none}
+  .board canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+  .board-bubble{pointer-events:none;position:absolute;bottom:10px;left:50%;transform:translateX(-50%);min-width:70%;max-width:96%;text-align:center;background:#071c28e8;color:white;padding:9px 11px;border-radius:12px;font-size:clamp(12px,2.4vw,17px);border:1px solid #c4eeab65;box-shadow:0 3px 10px #0005}
+  .tip{background:#123746;border:1px solid #5a859b55;border-radius:14px;font-size:14px;padding:10px 12px;color:#dfedf2;margin:14px 0 10px}
+  .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+  .action{border:1px solid #ffffff35;color:#fff;padding:17px 8px;border-radius:17px;font-weight:1000;font-size:clamp(13px,3vw,19px);background:#245069;box-shadow:0 4px 0 #0b2333;touch-action:manipulation}
+  .action.steal{background:#d96835;color:white;box-shadow:0 4px 0 #81351f}
+  .action.pass{background:#277e9c;box-shadow:0 4px 0 #11526b}
+  .action.shoot{background:#98da63;color:#153021;box-shadow:0 4px 0 #568a2c}
+  .action:active{transform:translateY(3px);box-shadow:0 1px 0 #0b2333}
+  .action.pulse{animation:glow .7s ease-in-out infinite alternate}
+  @keyframes glow{to{box-shadow:0 0 0 5px #ffe87766,0 0 24px #fce26da3;filter:brightness(1.18)}}
+  .belowgame{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#b9d0d8;font-size:12px;font-weight:500}
+  .result{max-width:710px;margin:14px auto;text-align:center}.medal{font-size:95px;line-height:1.1;margin:10px auto;animation:pop .33s ease}
+  .stars{color:var(--gold);font-size:42px;letter-spacing:8px;margin:8px 0}
+  .result p{font-size:18px;color:#daeff1;line-height:1.5}
+  .result .panel{text-align:left}.result .takeaway{font-size:20px;font-weight:900;color:var(--lime)}
+  .result-snapshot{margin:16px 0 12px;text-align:left;border:1px solid #9de4a06b;background:#102f3c;border-radius:18px;padding:12px}
+  .result-snapshot img{display:block;width:100%;height:auto;border-radius:12px;border:2px solid #ffffff55}
+  .result-snapshot figcaption{font-size:14px;font-weight:650;color:#e8f7f0;padding-top:10px;line-height:1.5}
+  .result-snapshot strong{color:var(--lime)}
+  .drills{display:flex;flex-direction:column;gap:10px}.drill{border-left:4px solid var(--lime);padding:7px 12px;background:#ffffff0c;border-radius:5px;font-weight:500}
+  @media (max-width:650px){
+    #app{padding:12px 12px calc(20px + env(safe-area-inset-bottom))}
+    .hero{grid-template-columns:1fr;gap:4px;padding:15px 0}.hero-ball{display:none}
+    .cards{grid-template-columns:1fr}.card{min-height:83px;padding:11px 13px}.card-emoji{font-size:28px;flex-basis:36px}.card-title{font-size:16px}
+    .board{height:clamp(330px,53vh,500px);border-radius:16px}
+    .controls{margin-top:15px}.action{padding:17px 6px}.top{margin-bottom:9px}
+    .buttonline{flex-direction:column}.buttonline .btn{width:100%}
+  }
+  @media (max-width:390px){.board{height:45vh;min-height:305px}.board-bubble{font-size:12px}.action{font-size:14px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<script>
+'use strict';
+(()=>{
+const levels=[
+ {emoji:'🛡️',name:'Brave Defender',cue:'CLOSE FAST. STAY IN FRONT.',prompt:'An attacker is running straight toward YOUR goal. What should you do?',answers:['Keep moving backward all the way to your goal.','Rush past the attacker with a wild tackle.','Run to close the gap, slow down, block the path, then win the ball.'],correct:2,why:'Close the space first. Slow your feet near the attacker. Stay between the ball and your goal, and steal when the ball is close.',instructions:'Run TOWARD the red attacker, then tap STEAL when you are close!',goal:'Win the ball before the attacker reaches your goal.',win:'You closed the gap and won the ball! 🛡️',takeaway:'CLOSE FAST → SLOW DOWN → WIN IT',drill:'Ask a parent to dribble toward a goal. Run to close the space, slow down, stay in front, and try to win the ball safely.',limit:36},
+ {emoji:'⚡',name:'Win It & Go',cue:'WIN IT. PUSH IT. GO!',prompt:'You just stole the ball. What should you do next?',answers:['Stand still and wait for everyone.','Look forward, take a quick touch into space, or pass to a teammate.','Turn around and dribble back toward your own goal.'],correct:1,why:'After a steal, the other team may be out of position. Look up and make your next move quickly—dribble into space or pass!',instructions:'STEAL the ball, then quickly run TOWARD their goal or PASS forward.',goal:'Win the ball, then attack right away.',win:'You won it and moved forward quickly! ⚡',takeaway:'STEAL → LOOK UP → GO!',drill:'A parent rolls you the ball. Win it, then take your first touch toward a small goal. Try to go in two seconds.',limit:36},
+ {emoji:'🐯',name:'Ball Hunter',cue:'BE BRAVE. PICK YOUR MOMENT.',prompt:'Three players are chasing the ball. You are nearby. What is a smart move?',answers:['Just run beside them and watch.','Look for the ball’s path, get in front, and challenge when you have a chance.','Crash into the crowd without looking.'],correct:1,why:'Be brave without bumping players. Think about where the ball is going, move into that space, and challenge for it.',instructions:'Move toward the RED player with the ball. Tap STEAL when close!',goal:'Stop watching the crowd. Go win the ball!',win:'Great ball hunting—you made your move! 🐯',takeaway:'WATCH THE BALL → GET CLOSE → CHALLENGE',drill:'Have a parent dribble slowly. Try to move into the ball’s path and touch it away without pushing.',limit:37},
+ {emoji:'🧭',name:'Find the Way Forward',cue:'FIND SPACE. NOT YOUR GOAL.',prompt:'You have the ball, but a defender blocks your way. What should you look for?',answers:['Always turn back and dribble straight toward your own goal.','Stop and try tricks until someone takes it.','Dribble into open space or pass to a teammate moving forward.'],correct:2,why:'You don’t have to run straight at defenders. Look for space or a teammate. A safe pass back is sometimes OK, but don’t automatically retreat toward your goal.',instructions:'You already have the ball! Go FORWARD into space or PASS to your teammate.',goal:'Escape pressure by finding a positive forward option.',win:'You found a way forward! 🧭',takeaway:'HEAD UP → FIND SPACE → GO OR PASS',drill:'Place one cone in front of you and a goal beyond it. Dribble around the cone toward goal, then try with a parent defending.',limit:34},
+ {emoji:'🚀',name:'Fast Forward',cue:'SEE IT. DECIDE. MOVE!',prompt:'You are starting an attack. Your teammate is already running forward. What is best?',answers:['Look up and choose a quick forward pass or dribble into space.','Wait while you perform lots of tricks.','Turn toward your own goal without looking up.'],correct:0,why:'A quick choice can beat defenders. Look up early: if your teammate has space, pass! Otherwise take the ball forward.',instructions:'Act FAST: PASS forward to the blue teammate or ATTACK their goal!',goal:'Make a fast forward play before defenders catch you.',win:'Quick thinking and teamwork! 🚀',takeaway:'LOOK UP → CHOOSE → GO!',drill:'Have a parent call “GO!” when you get the ball. Dribble or pass to a teammate within about two seconds.',limit:31}
+];
+const A=document.getElementById('app');
+let screen='home',index=0,answer=null,game=null,frame=0,last=0,canvas=null,ctx=null,keys={},pointerDown=false;
+let voice=false,muted=false,progress=loadProgress();
+function loadProgress(){try{return JSON.parse(localStorage.getItem('soccer-quest-progress'))||{}}catch{return {}}}
+function saveProgress(){try{localStorage.setItem('soccer-quest-progress',JSON.stringify(progress))}catch{}}
+function safe(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function speak(t){if(!voice||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();let msg=new SpeechSynthesisUtterance(t);msg.rate=.94;msg.pitch=1.15;speechSynthesis.speak(msg)}catch{}}
+function chirp(type='yay'){if(muted)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;let ac=window._sqAudio||(window._sqAudio=new C());if(ac.state==='suspended')ac.resume();let notes=type==='yay'?[440,554,659]:type==='no'?[270,220]:[550];notes.forEach((f,i)=>{let o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+i*.12;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.018);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.17)})}catch{}}
+const top=()=>`<header class="top"><div class="brand"><span class="logo">⚽</span><span>SOCCER QUEST</span></div><div style="display:flex;gap:6px"><button class="mini" data-action="voice" aria-label="Toggle voice coach">${voice?'🔊 Coach ON':'🔈 Coach OFF'}</button><button class="mini" data-action="sound" aria-label="Toggle sound effects">${muted?'🔇':'🎵'}</button></div></header>`;
+function mount(html){A.innerHTML=top()+html}
+function showHome(){stop();screen='home';answer=null;let done=Object.keys(progress).length;mount(`<section class="hero"><div><div class="eyebrow">THE 5-MINUTE SOCCER CHALLENGE</div><h1>THINK FAST.<br><span class="highlight">PLAY BRAVE!</span></h1><p class="muted" style="font-size:18px">Five fun mini-missions to help you win the ball, defend your goal, and attack quickly!</p><div class="cues"><div class="cue">🛡️ <b>CLOSE</b> SPACE</div><div class="cue">⚡ <b>WIN</b> IT</div><div class="cue">🚀 <b>GO</b> FORWARD</div></div><button class="btn large" data-action="quick">⚡ START QUICK PRACTICE →</button></div><div class="hero-ball" aria-hidden="true">⚽</div></section><section><div class="sectionhead"><h3>Choose your mission</h3><span class="muted" style="font-size:13px">${done}/5 completed</span></div><div class="cards">${levels.map((x,i)=>`<button class="card" data-level="${i}"><span class="card-emoji">${x.emoji}</span><span class="card-main"><div class="card-title">${i+1}. ${x.name}</div><div class="card-sub">${x.cue}</div>${progress[i]?`<div class="status">${'⭐'.repeat(progress[i])} Completed</div>`:''}</span><span class="arrow">→</span></button>`).join('')}</div><p class="footer-note">✅ Works offline · No account · No ads · No data sent anywhere<br>Parent tip: After playing, practice one of the missions together with a real ball.</p></section>`)}
+function showLesson(i){stop();index=i;screen='lesson';answer=null;const x=levels[i];mount(`<section class="lesson"><div class="eyebrow">MISSION ${i+1} OF 5</div><h2>${x.emoji} ${x.name}</h2><div class="pill">${x.cue}</div><div class="panel"><div class="situation"><div class="bigicon">🤔</div><div><div class="eyebrow">WHAT WOULD YOU DO?</div><p style="font-size:clamp(18px,3.7vw,23px);font-weight:850">${x.prompt}</p></div></div><div class="answers">${x.answers.map((a,j)=>`<button class="answer" data-answer="${j}"><span class="letter">${String.fromCharCode(65+j)}</span><span>${safe(a)}</span></button>`).join('')}</div><div id="answer-out"></div></div><div class="buttonline"><button class="btn secondary" data-action="home">← Missions</button><button class="btn" data-action="play">🎮 Skip to field practice →</button></div></section>`);speak(x.prompt)}
+function chooseAnswer(n){if(screen!=='lesson'||answer!==null)return;answer=n;const x=levels[index],good=n===x.correct;document.querySelectorAll('.answer').forEach((b,j)=>{b.disabled=true;if(j===x.correct)b.classList.add('good');else if(j===n)b.classList.add('bad')});document.getElementById('answer-out').innerHTML=`<div class="feedback ${good?'good':'bad'}"><div class="feedback-title">${good?'🌟 GREAT CHOICE!':'💡 GOOD TRY—HERE’S THE TRICK!'}</div><p>${x.why}</p></div><button class="btn large block" data-action="play">⚽ TRY IT ON THE FIELD →</button>`;chirp(good?'yay':'no');speak(good?'Great choice! '+x.why:'Good try. '+x.why)}
+function initGame(i){stop();index=i;screen='play';const x=levels[i];const startingBall=[false,false,false,true,true][i];let user,reds,mate;
+ if(i===0){user={u:.29,v:.02};reds=[{u:.61,v:0,ball:true},{u:.77,v:-.42,ball:false}];mate={u:.75,v:.43}}
+ if(i===1){user={u:.36,v:.14};reds=[{u:.52,v:.12,ball:true},{u:.71,v:-.38,ball:false}];mate={u:.76,v:-.53}}
+ if(i===2){user={u:.36,v:.53};reds=[{u:.56,v:.03,ball:true},{u:.59,v:-.4,ball:false},{u:.46,v:.33,ball:false}];mate={u:.82,v:-.57}}
+ if(i===3){user={u:.47,v:.09};reds=[{u:.64,v:.02,ball:false},{u:.79,v:.52,ball:false}];mate={u:.72,v:-.62}}
+ if(i===4){user={u:.43,v:.04};reds=[{u:.61,v:.0,ball:false},{u:.78,v:.38,ball:false}];mate={u:.78,v:-.46}}
+ game={active:true,elapsed:0,limit:x.limit,user,reds,mate,heldBy:startingBall?'blue':'red',target:null,flash:'',flashUntil:0,scored:false,stealTime:null,wrong:0,slow:0,passes:0,progressMax:user.u,ready:0,promptStart:performance.now(),outcome:null,waitAfter:0};
+ mount(`<section class="lesson" style="max-width:100%"><div class="hud"><div><div class="scoretag">MISSION ${i+1} / 5 · ${x.emoji} ${x.cue}</div><div class="hud-title">${x.name}</div></div><div class="hud-timer" id="timer">⏱ ${x.limit}s</div></div><div class="board" id="board"><canvas id="pitch" role="img" aria-label="Interactive soccer pitch. Tap where you want your player to run, then use the action buttons."></canvas><div class="board-bubble" id="board-bubble">${x.instructions}</div></div><div class="controls"><button class="action steal" data-action="steal" id="steal">🦁 STEAL</button><button class="action pass" data-action="pass" id="pass">🤝 PASS</button><button class="action shoot" data-action="shoot" id="shoot">⚽ SHOOT</button></div><div class="tip" id="play-tip">👆 <b>TAP or DRAG on the field</b> to run. Get close to the ball and tap <b>STEAL</b>. Pass to your blue teammate or shoot at the opponent’s goal!</div><div class="belowgame"><span>⌨️ Keyboard: arrow keys / WASD · Space steal · J pass · K shoot</span><button class="mini" data-action="restart">↻ Retry</button></div><div class="buttonline"><button class="btn secondary" data-action="home">← All missions</button></div></section>`);
+ canvas=document.getElementById('pitch');ctx=canvas.getContext('2d');canvas.addEventListener('pointerdown',fieldPointer);canvas.addEventListener('pointermove',fieldPointer);canvas.addEventListener('pointerup',()=>pointerDown=false);canvas.addEventListener('pointercancel',()=>pointerDown=false);resize();window.addEventListener('resize',resize);last=performance.now();frame=requestAnimationFrame(loop);speak(x.instructions);
+}
+function stop(){if(frame)cancelAnimationFrame(frame);frame=0;if(game)game.active=false;game=null;window.removeEventListener('resize',resize);pointerDown=false;keys={}}
+function resize(){if(!canvas)return;const b=canvas.getBoundingClientRect();if(!b.width||!b.height)return;let dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(b.width*dpr);canvas.height=Math.round(b.height*dpr);ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);render()}
+function dims(){if(!canvas)return{w:1,h:1,portrait:false};let b=canvas.getBoundingClientRect();return{w:b.width,h:b.height,portrait:b.height>b.width*1.0}}
+function fieldPos(u,v){let {w,h,portrait}=dims(),pad=29;return portrait?{x:w/2+v*(w-2*pad)/2,y:h-pad-u*(h-pad*2)}:{x:pad+u*(w-2*pad),y:h/2+v*(h-2*pad)/2}}
+function inversePos(x,y){let {w,h,portrait}=dims(),pad=29;return portrait?{u:clamp((h-pad-y)/(h-2*pad),.01,.99),v:clamp((x-w/2)/((w-2*pad)/2),-.92,.92)}:{u:clamp((x-pad)/(w-2*pad),.01,.99),v:clamp((y-h/2)/((h-2*pad)/2),-.92,.92)}}
+function fieldPointer(e){if(!game?.active)return;if(e.type==='pointerdown'){pointerDown=true;canvas.setPointerCapture?.(e.pointerId)}else if(!pointerDown)return;let rect=canvas.getBoundingClientRect();game.target=inversePos(e.clientX-rect.left,e.clientY-rect.top);if(e.cancelable)e.preventDefault()}
+function clamp(x,a,b){return Math.min(b,Math.max(a,x))}
+function dist(a,b){return Math.hypot((a.u-b.u)*1.02,(a.v-b.v)*.46)}
+function moveTo(p,q,du,dv,dt){if(!q)return;const dx=q.u-p.u,dy=q.v-p.v,d=Math.hypot(dx/du,dy/dv);if(d<=dt){p.u=q.u;p.v=q.v;return}let f=dt/d;p.u+=dx*f;p.v+=dy*f}
+function say(text,duration=3){if(!game)return;game.flash=text;game.flashUntil=game.elapsed+duration;let b=document.getElementById('board-bubble');if(b)b.textContent=text}
+function update(dt){let g=game;if(!g?.active)return;g.elapsed+=dt;g.ready+=dt;let {portrait}=dims();
+ // Physical arrow-key movement follows display orientation; D advances toward the opposing goal.
+ let dx=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),dy=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);
+ if(dx||dy){g.target=null;let norm=Math.hypot(dx,dy),uVel=portrait?-dy/norm:dx/norm,vVel=portrait?dx/norm:dy/norm;g.user.u=clamp(g.user.u+uVel*.27*dt,.05,.96);g.user.v=clamp(g.user.v+vVel*.56*dt,-.86,.86)}
+ else if(g.target){moveTo(g.user,g.target,.28,.59,dt);if(Math.abs(g.target.u-g.user.u)<.015&&Math.abs(g.target.v-g.user.v)<.027)g.target=null}
+ g.progressMax=Math.max(g.progressMax,g.user.u);
+ if(g.heldBy==='red'){
+  let holder=g.reds.find(e=>e.ball);if(!holder)return;
+  holder.u-=dt*(index===0?.071:.059);holder.v=clamp(holder.v+Math.sin(g.elapsed*1.8)*.018*dt,-.62,.62);
+  if(dist(g.user,holder)<.17 && g.elapsed>2.2 && g.elapsed%4<.04)say('YOU ARE CLOSE! Tap 🦁 STEAL!',1.5);
+  if(holder.u<.085){finish(false,'The attacker got through. Next time, move to meet the ball sooner!');return}
+ }else if(g.heldBy==='blue'){
+  if(g.user.u<.32&&index>=3){g.wrong+=dt;if(g.wrong>1.0&&g.wrong<1.1)say('Careful! That is toward YOUR goal. Look for space!',2.4)}
+  if(index===1&&g.stealTime!==null && g.elapsed-g.stealTime>8){finish(false,'After a steal, try your next move right away. Win it, then go!');return}
+  for(let e of g.reds){moveTo(e,g.user,.125,.30,dt);if(dist(e,g.user)<.12 && g.elapsed-(g.stealTime??0)>(index>=3?3.4:2.4)){g.slow+=dt;if(g.slow>1.15){finish(false,'A defender caught you. Try a quick dribble into space or a forward pass!');return}}else g.slow=Math.max(0,g.slow-dt*.7)}
+  if(index===1&&g.user.u>.76){finish(true);return}
+  if(index===2&&g.user.u>.76){finish(true);return}
+  if(index===3&&g.user.u>.79){finish(true);return}
+  if(index===4&&g.user.u>.81){finish(true);return}
+ }
+ if(g.elapsed>=g.limit){finish(false,'Time is up! Try again. You can do it!');return}
+ let timer=document.getElementById('timer');if(timer)timer.textContent='⏱ '+Math.max(0,Math.ceil(g.limit-g.elapsed))+'s';
+ let b=document.getElementById('board-bubble');if(b && g.flashUntil < g.elapsed){let label=g.heldBy==='red'?'Catch up to the ball, then tap STEAL!':(index===0?'Nice!':'Attack their goal or make a FORWARD pass!');if(b.textContent!==label)b.textContent=label}
+ let sb=document.getElementById('steal');if(sb)sb.classList.toggle('pulse',g.heldBy==='red'&&dist(g.user,g.reds.find(e=>e.ball)||g.reds[0])<.19);
+}
+function action(a){if(!game?.active)return;let g=game;
+ if(a==='steal'){
+  if(g.heldBy!=='red'){say('You have the ball! GO forward or PASS!',2);return}
+  let e=g.reds.find(x=>x.ball);if(!e)return;
+  if(dist(g.user,e)<.195){g.heldBy='blue';e.ball=false;g.stealTime=g.elapsed;g.slow=0;chirp('yay');if(index===0){finish(true);return}say('YOU WON IT! Now GO toward their goal! ⚡',2.5);speak('You won it! Go forward!')}
+  else {say('Get CLOSER to the ball first!',1.8);chirp('no')}
+  return;
+ }
+ if(g.heldBy!=='blue'){say('First get the ball! Tap STEAL when close.',2);chirp('no');return}
+ if(a==='pass'){
+  if(g.mate && g.mate.u>g.user.u+.07){g.passes++;chirp('yay');say('FAST FORWARD PASS! Great teamwork! 🤝',2);if(index===0){finish(true);return}finish(true,'You spotted your teammate and made a smart forward pass!');}
+  else {say('Look for a teammate in front of you!',2);chirp('no')}
+ }else if(a==='shoot'){
+  if(g.user.u>=.64){g.scored=true;chirp('yay');finish(true,'GOOOAL! You attacked at the right moment! ⚽')}
+  else{say('Move closer to the OTHER team’s goal, then shoot!',2.4);chirp('no')}
+ }
+}
+function loop(t){if(!game?.active)return;let dt=Math.min(.04,(t-last)/1000||.016);last=t;update(dt);render();if(game?.active)frame=requestAnimationFrame(loop)}
+function finish(won,override){if(!game?.active)return;const g=game;g.active=false;const x=levels[index];let time=g.elapsed;let stars=won?(time<x.limit*.36?3:time<x.limit*.74?2:1):0;
+ if(won){progress[index]=Math.max(progress[index]||0,stars);saveProgress();chirp('yay');speak(override||x.win)}else{chirp('no');speak('Good try! Try again.')}
+ const snapshot=won?captureWinningMoment(g):null;const endResult={won,stars,time,detail:override||(won?x.win:'Try the mission again.'),index,snapshot};stop();showResult(endResult)}
+// Capture the actual field at the instant a child completes a mission.
+// The snapshot is kept only in browser memory; it is never uploaded or persisted.
+function captureWinningMoment(g){
+ if(!canvas||!ctx)return null;
+ try{
+  render(); // capture the new ball ownership / successful action, not the previous frame
+  const snap=document.createElement('canvas');snap.width=canvas.width;snap.height=canvas.height;
+  const C=snap.getContext('2d');C.drawImage(canvas,0,0);
+  const scaleX=snap.width/dims().w,scaleY=snap.height/dims().h;
+  const here=fieldPos(g.user.u,g.user.v),x=here.x*scaleX,y=here.y*scaleY;
+  const radius=Math.max(27,Math.min(snap.width,snap.height)*.083);
+  C.save();C.strokeStyle='#ffe468';C.lineWidth=Math.max(5,snap.width*.010);C.shadowColor='#171e19';C.shadowBlur=10;
+  C.beginPath();C.arc(x,y,radius,0,Math.PI*2);C.stroke();C.restore();
+  let label='YOU MADE THE PLAY!';
+  if(g.passes>0){
+   label='GREAT FORWARD PASS!';
+   if(g.mate){let to=fieldPos(g.mate.u,g.mate.v),ex=to.x*scaleX,ey=to.y*scaleY;
+    C.save();C.strokeStyle='#ffe468';C.lineWidth=Math.max(4,snap.width*.008);C.setLineDash([14,9]);
+    C.beginPath();C.moveTo(x,y);C.lineTo(ex,ey);C.stroke();C.setLineDash([]);
+    let angle=Math.atan2(ey-y,ex-x);C.fillStyle='#ffe468';C.beginPath();C.moveTo(ex,ey);C.lineTo(ex-22*Math.cos(angle-.55),ey-22*Math.sin(angle-.55));C.lineTo(ex-22*Math.cos(angle+.55),ey-22*Math.sin(angle+.55));C.closePath();C.fill();C.restore();}
+  }else if(g.scored){label='YOU MOVED UP AND SHOT!'}
+  else if(index===0||g.heldBy==='blue'&&index===2){label='YOU WON THE BALL!'}
+  else{label='YOU MOVED TOWARD GOAL!'}
+  // Readable annotation bar makes the snapshot a child-friendly coaching reference.
+  C.fillStyle='#092b35f0';const bar=Math.max(39,snap.height*.105);C.fillRect(0,snap.height-bar,snap.width,bar);
+  C.fillStyle='#fff4a4';C.font=`900 ${Math.round(Math.min(snap.width*.047,bar*.50))}px system-ui`;
+  C.textAlign='center';C.textBaseline='middle';C.fillText('★ '+label,snap.width/2,snap.height-bar/2);
+  return snap.toDataURL('image/png');
+ }catch(e){console.warn('Mission snapshot unavailable',e);return null;}
+}
+function showResult(r){screen='result';index=r.index;const x=levels[index];mount(`<section class="result"><div class="eyebrow">MISSION ${index+1} · ${x.name}</div><div class="medal">${r.won?'🏆':'💪'}</div><h1>${r.won?'MISSION COMPLETE!':'KEEP TRYING!'}</h1>${r.won?`<div class="stars">${'⭐'.repeat(r.stars)}${'☆'.repeat(3-r.stars)}</div>`:''}<p>${r.detail}</p>${r.won&&r.snapshot?`<figure class="result-snapshot"><div class="eyebrow">📸 YOUR WINNING MOMENT</div><img src="${r.snapshot}" alt="Snapshot of your successful soccer play. Your blue number eight player is highlighted with a yellow ring; it shows where you were when you won."/><figcaption><strong>Look at the yellow circle:</strong> that is YOU when you made the winning move. ${index===0?'You moved in to win the ball.':index===1?'You won the ball and moved quickly into the attack.':index===2?'You moved into the play and challenged for the ball.':index===3?'You looked for forward space or a teammate.':'You made a quick move or forward pass!'} Remember this picture for your next game.</figcaption></figure>`:''}<div class="panel"><div class="eyebrow">REMEMBER ON THE REAL FIELD</div><p class="takeaway">${x.takeaway}</p><p class="muted">${x.why}</p><div class="drills"><div class="drill"><strong>🏡 Try it with a real ball:</strong><br>${x.drill}</div></div></div><div class="buttonline"><button class="btn secondary" data-action="home">← All missions</button><button class="btn alt" data-action="restart">↻ Try Again</button>${r.won?`<button class="btn" data-action="next">${index===4?'⚡ Play All Again':'Next Mission →'}</button>`:''}</div></section>`)}
+function roundedRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function line(a,b,color='#fff',width=2,dash=[]){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([])}
+function render(){if(!ctx||!game||!canvas)return;let g=game,{w,h,portrait}=dims(),C=ctx;C.clearRect(0,0,w,h);
+ const strips=8,rect={x:16,y:16,w:w-32,h:h-32};C.fillStyle='#138954';C.fillRect(0,0,w,h);
+ for(let i=0;i<strips;i++){C.fillStyle=i%2?'#167f4c':'#159354';if(portrait)C.fillRect(0,(h/strips)*i,w,h/strips+1);else C.fillRect((w/strips)*i,0,w/strips+1,h)}
+ C.strokeStyle='#f3fff2a8';C.lineWidth=2;C.strokeRect(rect.x,rect.y,rect.w,rect.h);
+ let midfieldA=fieldPos(.5,-1),midfieldB=fieldPos(.5,1);line(midfieldA,midfieldB,'#efffeeae',2);
+ let center=fieldPos(.5,0);C.beginPath();C.arc(center.x,center.y,Math.min(w,h)*.13,0,Math.PI*2);C.stroke();C.beginPath();C.arc(center.x,center.y,2,0,Math.PI*2);C.fillStyle='#fff';C.fill();
+ // goal boxes and goals, always end-oriented
+ const boxA=[fieldPos(0,-.48),fieldPos(.145,.48)],boxB=[fieldPos(.855,-.48),fieldPos(1,.48)];
+ for(let pts of [boxA,boxB]){C.strokeStyle='#f8fffbb8';C.lineWidth=2;let minX=Math.min(pts[0].x,pts[1].x),minY=Math.min(pts[0].y,pts[1].y);C.strokeRect(minX,minY,Math.abs(pts[0].x-pts[1].x),Math.abs(pts[0].y-pts[1].y))}
+ const goal1=fieldPos(0,0),goal2=fieldPos(1,0);
+ C.fillStyle='#ffdfc0';C.strokeStyle='#e9fbe3';C.lineWidth=3;
+ if(portrait){C.fillRect(goal1.x-32,h-15,64,12);C.fillRect(goal2.x-32,3,64,12)}else{C.fillRect(2,goal1.y-32,12,64);C.fillRect(w-14,goal2.y-32,12,64)}
+ C.save();C.textAlign='center';C.font=`900 ${Math.max(10,Math.min(w,h)*.033)}px system-ui`;C.fillStyle='#fff';
+ if(portrait){C.fillText('⬆ SCORE HERE ⬆',w/2,Math.min(48,h*.11));C.fillText('YOUR GOAL',w/2,h-40)}
+ else {C.save();C.translate(35,h/2);C.rotate(-Math.PI/2);C.fillText('YOUR GOAL',0,0);C.restore();C.save();C.translate(w-36,h/2);C.rotate(Math.PI/2);C.fillText('SCORE HERE',0,0);C.restore()}
+ C.restore();
+ // direction indicator on an empty strip of pitch
+ if(g.heldBy==='blue'){let u=clamp(g.user.u+.15,.1,.95),v=g.user.v>0?-.78:.78,p=fieldPos(u,v);C.globalAlpha=.72;C.font=`bold ${Math.max(13,Math.min(w,h)*.07)}px system-ui`;C.textAlign='center';C.fillStyle='#effb9a';C.fillText(portrait?'⬆':'➜',p.x,p.y);C.globalAlpha=1}
+ // target marker
+ if(g.target){let p=fieldPos(g.target.u,g.target.v);C.strokeStyle='#fbf493';C.lineWidth=2.5;C.setLineDash([3,4]);C.beginPath();C.arc(p.x,p.y,14,0,Math.PI*2);C.stroke();C.setLineDash([]);}
+ const rad=clamp(Math.min(w,h)*.043,13,21);
+ // subtle halo around opponent holding the ball
+ g.reds.forEach(e=>{let p=fieldPos(e.u,e.v);if(e.ball){C.beginPath();C.arc(p.x,p.y,rad*2.4,0,2*Math.PI);C.fillStyle='#ffefa51d';C.fill();C.strokeStyle='#ffe67aa0';C.lineWidth=2;C.stroke()}});
+ // teammate forward pass cue
+ if(g.heldBy==='blue'&&g.mate&&g.mate.u>g.user.u+.06)line(fieldPos(g.user.u,g.user.v),fieldPos(g.mate.u,g.mate.v),'#b8ebffbb',2,[6,7]);
+ if(g.mate)drawPlayer(g.mate,'#40baf5','7','FRIEND',rad*.92);
+ g.reds.forEach(e=>drawPlayer(e,'#fa5d6b',e.ball?'9':'4',e.ball?'BALL':'RED',rad*.94));
+ drawPlayer(g.user,'#248af7','8','YOU',rad*1.08,true);
+ // ball in front of ball-holder
+ let holder=g.heldBy==='blue'?g.user:g.heldBy==='red'?g.reds.find(e=>e.ball):null;if(holder){let p=fieldPos(holder.u,holder.v),offset=rad*.7;let cx=p.x+(portrait?offset:offset),cy=p.y+(portrait?-offset:offset*.45);C.fillStyle='#fff';C.strokeStyle='#202f38';C.lineWidth=1.5;C.beginPath();C.arc(cx,cy,rad*.52,0,2*Math.PI);C.fill();C.stroke();C.fillStyle='#202f38';C.font=`900 ${rad*.75}px system-ui`;C.textAlign='center';C.textBaseline='middle';C.fillText('◆',cx,cy+1);C.textBaseline='alphabetic'}
+}
+function drawPlayer(obj,color,num,label,rad,hero=false){let p=fieldPos(obj.u,obj.v),C=ctx;C.save();C.shadowColor='#001b26a3';C.shadowBlur=6;C.shadowOffsetY=3;C.beginPath();C.arc(p.x,p.y,rad,0,Math.PI*2);C.fillStyle=color;C.fill();C.shadowBlur=0;C.shadowOffsetY=0;C.strokeStyle=hero?'#c4ff86':'#f3fff3';C.lineWidth=hero?3:2;C.stroke();C.fillStyle='#fff';C.font=`900 ${rad*.92}px system-ui`;C.textAlign='center';C.textBaseline='middle';C.fillText(num,p.x,p.y+1);C.font=`900 ${clamp(rad*.60,9,12)}px system-ui`;C.textBaseline='alphabetic';C.fillStyle='#ffffff';C.strokeStyle='#064c35';C.lineWidth=3;C.strokeText(label,p.x,p.y+rad+13);C.fillText(label,p.x,p.y+rad+13);C.restore()}
+window.addEventListener('keydown',e=>{if(!game?.active)return;let k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowRight','ArrowLeft','ArrowDown','ArrowUp',' ','j','k','w','a','s','d'].includes(k)){e.preventDefault();keys[k]=true;if(k===' '){action('steal')}if(k==='j')action('pass');if(k==='k')action('shoot')}});
+window.addEventListener('keyup',e=>{let k=e.key.length===1?e.key.toLowerCase():e.key;keys[k]=false});window.addEventListener('blur',()=>{keys={}});
+A.addEventListener('click',e=>{let t=e.target.closest('button');if(!t)return;
+ if(t.hasAttribute('data-level')){showLesson(Number(t.dataset.level));return}
+ if(t.hasAttribute('data-answer')){chooseAnswer(Number(t.dataset.answer));return}
+ let a=t.dataset.action;
+ if(a==='voice'){voice=!voice;t.textContent=voice?'🔊 Coach ON':'🔈 Coach OFF';if(voice)speak('Let’s play soccer! Be brave!');else if('speechSynthesis'in window)speechSynthesis.cancel()}
+ if(a==='sound'){muted=!muted;t.textContent=muted?'🔇':'🎵';if(!muted)chirp('tap')}
+ if(a==='home')showHome();if(a==='quick')showLesson(0);if(a==='play')initGame(index);if(a==='restart'){if(screen==='play'||screen==='result')initGame(index);else showLesson(index)}
+ if(a==='next'){showLesson(index===4?0:index+1)}
+ if(['steal','pass','shoot'].includes(a))action(a)
+});
+showHome();
+})();
+</script>
+</body>
+</html>
